@@ -232,7 +232,7 @@ do
 	for p_ip in $pod_ip_z3
 	do
 		echo oc exec -n z4 $pod_i -- curl --connect-timeout 3 ${p_ip}:8080 https://${p_ip}:8443 -k 2>/dev/null
-		oc exec -n z4 $pod_i -- curl --connect-timeout 3 ${p_ip}:8080 https://${p_ip}:8443 -k 2>/dev/null
+		oc exec -n z4 $pod_i -- curl --connect-timeout 5 network-check-target.openshift-network-diagnostics.svc 2>/dev/null && oc exec -n z4 $pod_i -- curl --connect-timeout 5 ifconfig.me 2>/dev/null && echo && oc exec -n z4 $pod_i -- curl --connect-timeout 5${p_ip}:8080 https://${p_ip}:8443 -k 2>/dev/null
 		if [ $? != 0 ]; then
 			echo "########################################"
 			echo oc exec -n z4 $pod_i -- curl --connect-timeout 3 ${p_ip}:8080 https://${p_ip}:8443 -k 2>/dev/null
